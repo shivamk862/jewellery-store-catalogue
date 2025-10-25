@@ -1,0 +1,85 @@
+## Original Goal
+
+I want to build a MERN stack application for a jewellery store with the following requirements:
+
+1.  **Frontend (React.js)**
+    *   Attractive, modern, and responsive UI for both users and admin.
+    *   **User features:**
+        *   Signup and login functionality.
+        *   Product listing page with images, descriptions, prices, and categories.
+        *   Product detail page with image gallery, specifications, and add-to-cart option.
+        *   Search and filter products by category, price, or popularity.
+        *   Smooth navigation and user-friendly interface.
+
+2.  **Backend (Node.js + Express.js)**
+    *   RESTful APIs for:
+        *   User authentication (signup/login/logout).
+        *   CRUD operations for products.
+        *   Image upload, storing images directly in MongoDB.
+        *   Validation and error handling for all API endpoints.
+
+3.  **Admin Panel**
+    *   Secure login for admin users.
+    *   Dashboard to manage products: add, update, delete, view.
+    *   Upload and manage product images.
+    *   Optional: dashboard showing product stats.
+
+4.  **Database (MongoDB)**
+    *   Store all product data including images, categories, pricing, descriptions, and stock.
+    *   Store user authentication data securely.
+
+5.  **Extras (Optional but preferred)**
+    *   Pagination for product listings.
+    *   Nice UI animations and modern design aesthetics.
+
+**Goal:** A full-stack jewellery store application where products come dynamically from the backend, users can signup/login, and the admin can manage all products via a secure dashboard.
+
+## Updated Goal and Progress
+
+Our goal has evolved to transform the application into a comprehensive jewellery catalogue with enhanced category management, robust search capabilities, and a refined user interface.
+
+**Current State:**
+
+*   **Backend:**
+    *   `User`, `Product`, `Category`, and `Cart` models are implemented.
+    *   API endpoints for authentication, products (CRUD), categories (CRUD), and cart operations are implemented.
+    *   Admin user creation from `.env` is implemented.
+    *   `productController.js` supports filtering by category and searching by name.
+    *   Image encoding to base64 is handled on the backend.
+*   **Frontend:**
+    *   React application with `react-router-dom`, `axios`, `bootstrap`, `react-bootstrap`, `react-toastify`, and `jwt-decode`.
+    *   Authentication context (`AuthContext`) and Cart context (`CartContext`) are implemented.
+    *   `Header` component displays conditional links (Login/Signup modal or Logout) and cart item count.
+    *   `Footer` component is sticky at the bottom.
+    *   `HomePage` displays a hero section with a local image and a `CategoryList` component.
+    *   `ProductsPage` displays products, supports filtering by category, has a search bar with a clear button, and an "Add to Cart" button.
+    *   `ProductDetailPage` displays details of a single product.
+    *   `CartPage` displays cart items with options to remove items.
+    *   `AdminDashboardPage` allows for CRUD operations on products and categories, with separate tabs for each.
+    *   `LoginSignupModal` handles user login and signup.
+    *   `AdminRoute` protects the admin dashboard, redirecting to `AdminLoginPage` if not an authenticated admin.
+    *   `AdminLoginPage` provides a dedicated login for admin users.
+
+**Completed Tasks (since last major update):**
+
+*   Implemented category management (CRUD) in the admin dashboard.
+*   Implemented product CRUD in the admin dashboard.
+*   Added `CategoryList` component to `HomePage`.
+*   Implemented category filtering and search bar in `ProductsPage`.
+*   Implemented `ProductDetailPage`.
+*   Improved UI/UX for "catalogue" feel (styling, search clear button).
+*   Fixed "RangeError" by handling image encoding on the backend.
+*   Fixed "Add to Cart" functionality.
+*   Fixed footer not being fixed at the bottom.
+
+**Remaining Tasks:**
+
+1.  **Further UI/UX improvements for a "catalogue" feel:**
+    *   Review overall design and make further enhancements to visual appeal and user experience.
+2.  **Product Detail Page Enhancements:**
+    *   Ensure the product detail page has an image gallery (currently only a single image).
+    *   Add quantity selection for "Add to Cart" on the product detail page.
+3.  **Checkout Process:**
+    *   Implement a more robust checkout process (beyond a simple alert). This would involve order creation on the backend and a dedicated checkout page on the frontend.
+4.  **User Profile/Order History:**
+    *   Implement a user profile page where users can view their order history.
