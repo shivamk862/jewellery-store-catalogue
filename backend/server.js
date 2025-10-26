@@ -7,11 +7,32 @@ const User = require('./models/User');
 require('dotenv').config();
 
 const app = express();
-const PORT = process.env.PORT || 5000;
 
 // Middleware
 app.use(cors());
 app.use(express.json());
+
+// Connect to MongoDB
+const connectDB = async () => {
+  if (mongoose.connection.readyState === 0) { // Check if not already connected
+    try {
+      await mongoose.connect(process.env.MONGO_URI, {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+      });
+      console.log('MongoDB connected');
+    } catch (err) {
+      console.error(err.message);
+      process.exit(1);
+    }
+  }
+};
+
+// Middleware to connect to DB on each request (Vercel serverless)
+app.use(async (req, res, next) => {
+  await connectDB();
+  next();
+});
 
 // Routes
 app.use('/api/auth', require('./routes/auth'));
@@ -22,6 +43,8 @@ app.get('/', (req, res) => {
   res.send('<h1>Jewellery Store API</h1>');
 });
 
+// Commenting out createAdmin for Vercel deployment
+/*
 const createAdmin = async () => {
   try {
     console.log('Checking for admin user...');
@@ -57,19 +80,6 @@ const createAdmin = async () => {
     console.error('Error during admin user creation:', error);
   }
 };
+*/
 
-// Connect to MongoDB
-mongoose.connect(process.env.MONGO_URI, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-})
-.then(() => {
-  console.log('MongoDB connected');
-  createAdmin();
-})
-.catch(err => console.log(err));
-
-
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
-});
+module.exports = app;
