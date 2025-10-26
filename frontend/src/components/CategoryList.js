@@ -35,7 +35,7 @@ const CategoryList = () => {
         <Alert variant="danger">{error}</Alert>
       ) : (
         <Row>
-          {categories.map((category) => (
+          {categories && categories.map((category) => (
             <Col key={category._id} sm={12} md={6} lg={4} xl={3}>
               <Card className="my-3 p-3 rounded text-center">
                 <Link to={`/products?category=${category._id}`}>

@@ -50,7 +50,7 @@ const createAdmin = async () => {
     console.log('Checking for admin user...');
     const adminEmail = process.env.ADMIN_EMAIL;
     const adminPassword = process.env.ADMIN_PASSWORD;
-    const adminName = process.env.ADMIN_NAME;
+    const adminName = process.env.NAME;
 
     if (!adminEmail || !adminPassword || !adminName) {
       console.log('Admin credentials not found in .env file. Skipping admin creation.');
