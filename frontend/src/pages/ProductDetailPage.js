@@ -1,6 +1,6 @@
 
 import React, { useState, useEffect, useContext } from 'react';
-import axios from 'axios';
+import api from '../services/api';
 import { Link, useParams } from 'react-router-dom';
 import { Row, Col, Image, ListGroup, Card, Button, Spinner, Alert } from 'react-bootstrap';
 import CartContext from '../context/CartContext';
@@ -17,7 +17,7 @@ const ProductDetailPage = () => {
   useEffect(() => {
     const fetchProduct = async () => {
       try {
-        const { data } = await axios.get(`/api/products/${id}`);
+        const { data } = await api.get(`/api/products/${id}`);
         setProduct(data);
         setLoading(false);
       } catch (err) {

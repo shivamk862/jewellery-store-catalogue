@@ -1,7 +1,7 @@
 
 import React, { useState, useContext } from 'react';
 import { Modal, Tabs, Tab, Form, Button, Spinner, Alert } from 'react-bootstrap';
-import axios from 'axios';
+import api from '../services/api';
 import { useNavigate } from 'react-router-dom';
 import AuthContext from '../context/AuthContext';
 
@@ -24,7 +24,7 @@ const LoginSignupModal = ({ show, handleClose }) => {
     setError('');
     setSuccess('');
     try {
-      const res = await axios.post('/api/auth/login', loginData);
+      const res = await api.post('/api/auth/login', loginData);
       setSuccess('Login successful! Redirecting...');
       login(res.data.token);
       setLoading(false);
@@ -44,7 +44,7 @@ const LoginSignupModal = ({ show, handleClose }) => {
     setError('');
     setSuccess('');
     try {
-      await axios.post('/api/auth/signup', signupData);
+      await api.post('/api/auth/signup', signupData);
       setSuccess('Signup successful! Please login.');
       setLoading(false);
       setKey('login');

@@ -7,9 +7,11 @@
 *   **Backend:**
     *   `User`, `Product`, `Category`, and `Cart` models are implemented.
     *   API endpoints for authentication, products (CRUD), categories (CRUD), and cart operations are implemented.
-    *   Admin user creation from `.env` is implemented.
+    *   Admin user creation from `.env` is handled.
     *   `productController.js` supports filtering by category and searching by name.
-    *   Image encoding to base64 is handled on the backend.
+    *   Image encoding to base64 is managed on the backend.
+    *   Backend `server.js` has been configured for Vercel serverless deployment (exports `app`, connects to MongoDB on request, `createAdmin` commented out).
+    *   `vercel.json` is configured for Vercel deployment.
 *   **Frontend:**
     *   React application with `react-router-dom`, `axios`, `bootstrap`, `react-bootstrap`, `react-toastify`, and `jwt-decode`.
     *   Authentication context (`AuthContext`) and Cart context (`CartContext`) are implemented.
@@ -23,6 +25,7 @@
     *   `LoginSignupModal` handles user login and signup.
     *   `AdminRoute` protects the admin dashboard, redirecting to `AdminLoginPage` if not an authenticated admin.
     *   `AdminLoginPage` provides a dedicated login for admin users.
+    *   Frontend `package.json` proxy is set to `https://jewellery-store-catalogue-n81i.vercel.app` for Vercel backend.
 
 **Completed Tasks (since last major update):**
 
@@ -35,6 +38,11 @@
 *   Fixed "RangeError" by handling image encoding on the backend.
 *   Fixed "Add to Cart" functionality.
 *   Fixed footer not being fixed at the bottom.
+*   Updated `deleteProduct` and `deleteCategory` to use `deleteOne()` in backend controllers.
+*   Configured backend for Vercel deployment (`server.js` and `vercel.json`).
+*   Created `frontend/src/services/api.js` for centralized API calls.
+*   Updated `CategoryList.js`, `AdminDashboardPage.js`, `ProductsPage.js`, `ProductDetailPage.js`, `LoginSignupModal.js`, and `CartContext.js` to use the new `api` instance.
+*   Added conditional rendering for `categories.map` in `CategoryList.js` to prevent `TypeError`.
 
 **Remaining Tasks:**
 
@@ -47,3 +55,6 @@
     *   Implement a more robust checkout process (beyond a simple alert). This would involve order creation on the backend and a dedicated checkout page on the frontend.
 4.  **User Profile/Order History:**
     *   Implement a user profile page where users can view their order history.
+5.  **Vercel Deployment of Frontend:**
+    *   Set `REACT_APP_API_URL` environment variable in Vercel frontend project settings to the deployed backend URL.
+    *   Deploy the frontend to Vercel.

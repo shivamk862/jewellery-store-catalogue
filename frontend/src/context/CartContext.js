@@ -1,6 +1,6 @@
 
 import React, { createContext, useState, useContext, useEffect } from 'react';
-import axios from 'axios';
+import api from '../services/api';
 import { toast } from 'react-toastify';
 import AuthContext from './AuthContext';
 
@@ -26,7 +26,7 @@ export const CartProvider = ({ children }) => {
           'x-auth-token': token,
         },
       };
-      const res = await axios.get('/api/cart', config);
+      const res = await api.get('/api/cart', config);
       setCart(res.data);
     } catch (err) {
       setError(err.response ? err.response.data.msg : err.message);
@@ -44,7 +44,7 @@ export const CartProvider = ({ children }) => {
         },
       };
       const body = JSON.stringify({ productId, quantity });
-      const res = await axios.post('/api/cart', body, config);
+      const res = await api.post('/api/cart', body, config);
       setCart(res.data);
       toast.success('Item added to cart!');
     } catch (err) {
@@ -63,7 +63,7 @@ export const CartProvider = ({ children }) => {
           'x-auth-token': token,
         },
       };
-      const res = await axios.delete(`/api/cart/${productId}`, config);
+      const res = await api.delete(`/api/cart/${productId}`, config);
       setCart(res.data);
       toast.success('Item removed from cart!');
     } catch (err) {

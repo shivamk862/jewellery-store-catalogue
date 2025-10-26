@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import axios from 'axios';
+import api from '../services/api';
 import { Tab, Tabs, Table, Button, Modal, Form, Spinner, Alert } from 'react-bootstrap';
 import AuthContext from '../context/AuthContext';
 
@@ -36,7 +36,7 @@ const AdminDashboardPage = () => {
 
   const fetchProducts = async () => {
     try {
-      const { data } = await axios.get('/api/products');
+      const { data } = await api.get('/api/products');
       setProducts(data);
       setLoading(false);
     } catch (err) {
@@ -47,7 +47,7 @@ const AdminDashboardPage = () => {
 
   const fetchCategories = async () => {
     try {
-      const { data } = await axios.get('/api/categories');
+      const { data } = await api.get('/api/categories');
       setCategories(data);
     } catch (err) {
       setError('Error fetching categories');
@@ -83,9 +83,9 @@ const AdminDashboardPage = () => {
       };
 
       if (isEditingProduct) {
-        await axios.put(`/api/products/${currentProduct._id}`, productData, config);
+        await api.put(`/api/products/${currentProduct._id}`, productData, config);
       } else {
-        await axios.post('/api/products', productData, config);
+        await api.post('/api/products', productData, config);
       }
       fetchProducts();
       handleCloseProductModal();
@@ -102,7 +102,7 @@ const AdminDashboardPage = () => {
             'x-auth-token': token,
           },
         };
-        await axios.delete(`/api/products/${id}`, config);
+        await api.delete(`/api/products/${id}`, config);
         fetchProducts();
       } catch (err) {
         setError('Error deleting product');
@@ -140,9 +140,9 @@ const AdminDashboardPage = () => {
       };
 
       if (isEditingCategory) {
-        await axios.put(`/api/categories/${currentCategory._id}`, categoryData, config);
+        await api.put(`/api/categories/${currentCategory._id}`, categoryData, config);
       } else {
-        await axios.post('/api/categories', categoryData, config);
+        await api.post('/api/categories', categoryData, config);
       }
       fetchCategories();
       handleCloseCategoryModal();
@@ -159,7 +159,7 @@ const AdminDashboardPage = () => {
             'x-auth-token': token,
           },
         };
-        await axios.delete(`/api/categories/${id}`, config);
+        await api.delete(`/api/categories/${id}`, config);
         fetchCategories();
       } catch (err) {
         setError('Error deleting category');

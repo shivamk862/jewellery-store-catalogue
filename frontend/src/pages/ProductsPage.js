@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import axios from 'axios';
+import api from '../services/api';
 import { Card, Row, Col, Spinner, Alert, Button, Form, InputGroup } from 'react-bootstrap';
 import { useLocation, Link } from 'react-router-dom';
 import CartContext from '../context/CartContext';
@@ -32,7 +32,7 @@ const ProductsPage = () => {
           params.search = searchKeyword;
         }
 
-        const { data } = await axios.get(url, { params });
+        const { data } = await api.get(url, { params });
         setProducts(data);
         setLoading(false);
       } catch (err) {
