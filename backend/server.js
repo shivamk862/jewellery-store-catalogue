@@ -4,7 +4,7 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 const bcrypt = require('bcryptjs');
 const User = require('./models/User');
-require('dotenv').config();
+require('dotenv').config({ path: __dirname + '/.env' });
 
 const app = express();
 
@@ -21,6 +21,7 @@ const connectDB = async () => {
         useUnifiedTopology: true,
       });
       console.log('MongoDB connected');
+      await createAdmin(); // Create admin user if it doesn't exist
     } catch (err) {
       console.error(err.message);
       process.exit(1);
@@ -43,19 +44,18 @@ app.get('/', (req, res) => {
   res.send('<h1>Jewellery Store API</h1>');
 });
 
-// Commenting out createAdmin for Vercel deployment
-/*
 const createAdmin = async () => {
   try {
-    console.log('Checking for admin user...');
+    console.log('--- Running createAdmin function ---');
     const adminEmail = process.env.ADMIN_EMAIL;
     const adminPassword = process.env.ADMIN_PASSWORD;
-    const adminName = process.env.NAME;
+    const adminName = process.env.ADMIN_NAME;
 
     if (!adminEmail || !adminPassword || !adminName) {
       console.log('Admin credentials not found in .env file. Skipping admin creation.');
       return;
     }
+    console.log(`Admin email from .env: ${adminEmail}`);
 
     const existingAdmin = await User.findOne({ email: adminEmail });
 
@@ -75,11 +75,27 @@ const createAdmin = async () => {
       console.log('Admin user created successfully.');
     } else {
       console.log('Admin user already exists.');
+      // Log if the existing admin user has isAdmin set to true
+      console.log(`Existing admin user isAdmin flag: ${existingAdmin.isAdmin}`);
     }
+    console.log('--- Finished createAdmin function ---');
   } catch (error) {
     console.error('Error during admin user creation:', error);
   }
 };
-*/
+
+const PORT = process.env.PORT || 5000;
+
+const startServer = async () => {
+  await connectDB();
+  app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
+  });
+};
+
+// Start the server if not in a serverless environment
+if (process.env.NODE_ENV !== 'production') {
+  startServer();
+}
 
 module.exports = app;

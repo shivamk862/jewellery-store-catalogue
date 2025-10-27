@@ -46,15 +46,22 @@ exports.signup = async (req, res) => {
 
 exports.login = async (req, res) => {
   const { email, password } = req.body;
+  console.log(`--- Login attempt for email: ${email} ---`);
 
   try {
     let user = await User.findOne({ email });
     if (!user) {
+      console.log('Login failed: User not found.');
       return res.status(400).json({ msg: 'Invalid credentials' });
     }
 
+    console.log('User found in database:', user);
+
     const isMatch = await bcrypt.compare(password, user.password);
+    console.log(`Password comparison result: ${isMatch}`);
+
     if (!isMatch) {
+      console.log('Login failed: Incorrect password.');
       return res.status(400).json({ msg: 'Invalid credentials' });
     }
 
@@ -65,17 +72,20 @@ exports.login = async (req, res) => {
       },
     };
 
+    console.log('JWT payload:', payload);
+
     jwt.sign(
       payload,
       process.env.JWT_SECRET,
       { expiresIn: 3600 },
       (err, token) => {
         if (err) throw err;
+        console.log('--- Login successful ---');
         res.json({ token });
       }
     );
   } catch (err) {
-    console.error(err.message);
+    console.error('Server error during login:', err.message);
     res.status(500).send('Server error');
   }
 };

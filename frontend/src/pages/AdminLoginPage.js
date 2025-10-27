@@ -1,9 +1,10 @@
 
+
 import React, { useState, useContext } from 'react';
-import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { Form, Button, Spinner, Alert, Container, Row, Col } from 'react-bootstrap';
 import AuthContext from '../context/AuthContext';
+import api from '../services/api';
 
 const AdminLoginPage = () => {
   const [formData, setFormData] = useState({ email: '', password: '' });
@@ -19,12 +20,12 @@ const AdminLoginPage = () => {
     setLoading(true);
     setError('');
     try {
-      const res = await axios.post('/api/auth/login', formData);
+      const res = await api.post('/api/auth/login', formData);
       login(res.data.token);
       setLoading(false);
       navigate('/admin');
     } catch (err) {
-      setError(err.response.data.msg || 'Invalid credentials');
+      setError(err.response && err.response.data && err.response.data.msg ? err.response.data.msg : 'Invalid credentials or server error');
       setLoading(false);
     }
   };
@@ -53,5 +54,6 @@ const AdminLoginPage = () => {
     </Container>
   );
 };
+
 
 export default AdminLoginPage;
