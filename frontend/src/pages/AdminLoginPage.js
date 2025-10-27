@@ -20,7 +20,7 @@ const AdminLoginPage = () => {
     setLoading(true);
     setError('');
     try {
-      const res = await api.post('/api/auth/login', formData);
+      const res = await api.post(`${process.env.REACT_APP_API_URL}/api/auth/login`, formData);
       login(res.data.token);
       setLoading(false);
       navigate('/admin');
