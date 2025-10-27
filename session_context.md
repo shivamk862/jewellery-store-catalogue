@@ -43,6 +43,17 @@
 *   Created `frontend/src/services/api.js` for centralized API calls.
 *   Updated `CategoryList.js`, `AdminDashboardPage.js`, `ProductsPage.js`, `ProductDetailPage.js`, `LoginSignupModal.js`, and `CartContext.js` to use the new `api` instance.
 *   Added conditional rendering for `categories.map` in `CategoryList.js` to prevent `TypeError`.
+*   **Fixed Admin Login Issues:**
+    *   Modified `backend/server.js` to uncomment and integrate the `createAdmin` function, ensuring admin user creation on server startup.
+    *   Added `app.listen()` for local server execution in `backend/server.js`.
+    *   Explicitly set the `.env` file path in `dotenv.config()` in `backend/server.js` for robust environment variable loading.
+    *   Corrected a typo in `createAdmin` from `process.env.NAME` to `process.env.ADMIN_NAME` in `backend/server.js`.
+    *   Added detailed logging to the `login` function in `backend/controllers/authController.js` for debugging.
+    *   Modified `frontend/src/pages/AdminLoginPage.js` to use the centralized `api` service and improved error handling.
+    *   Commented out `REACT_APP_API_URL` in `frontend/.env` for local development.
+*   **Fixed Mobile Navigation Toggle:**
+    *   Refactored the `Header` component in `frontend/src/components/Header.js` to use `react-bootstrap` components for the navigation bar, resolving the mobile toggle issue.
+    *   Fixed a `SyntaxError` (duplicate export) in `frontend/src/components/Header.js`.
 
 **Remaining Tasks:**
 
